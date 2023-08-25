@@ -1,6 +1,7 @@
 using CognitiveServicesTTS;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Properties;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,9 @@ public class DialoguePanel : MonoBehaviour
     public float verbatimIntervalTime = 0.1f;
     //逐字显示的携程
     private Coroutine verbatimCoroutine;
+
+    public SpeechManager speech;
+    public bool isSpeechOn = true;
 
     void Start()
     {
@@ -30,13 +34,24 @@ public class DialoguePanel : MonoBehaviour
 
         ChatGPTManager.Instance.ChatContinuously(inputField.text, (content) => 
         {
-            ShowDialogue("GPT", content);
+            ShowDialogue("小助理", content);
+
+            SpeechPlayback(content);
 
             sendButton.interactable = true;
         });
 
         //清空输入框
         inputField.text = "";
+    }
+
+    private void SpeechPlayback(string content)
+    {
+        if (speech.isReady && isSpeechOn)
+        {
+            speech.voiceName = VoiceName.zhCNXiaoxiaoNeural;
+            speech.SpeakWithRESTAPI(content);
+        }
     }
 
     public void ShowDialogue(string speakerName, string content,bool isVerbatim = true) 

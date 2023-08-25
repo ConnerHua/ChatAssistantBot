@@ -33,10 +33,11 @@ public class ChatGPTManager : MonoBehaviour
 
     private string chatGPTModel = "gpt-3.5-turbo";
 
+    //add api key
     private string chatGptApiKey = "";
 
     //AI人设的提示词
-    private string aiRolePrompt = "现在我希望你是数学老师";
+    private string aiRolePrompt = "现在我希望你是一个VR虚拟仿真解决方案助理，你很害羞，回答尽量简短";
 
     
     //发送给ChatGPT的数据
